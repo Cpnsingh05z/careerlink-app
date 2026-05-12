@@ -41,13 +41,13 @@ export const signup = async (req, res) => {
 		res.cookie("jwt-linkedin", token, {
 			httpOnly: true, // prevent XSS attack
 			maxAge: 3 * 24 * 60 * 60 * 1000,
-			sameSite: "strict", // prevent CSRF attacks,
-			secure: process.env.NODE_ENV === "production", // prevents man-in-the-middle attacks
+			sameSite: "none",
+            secure: true,
 		});
 
 		res.status(201).json({ message: "User registered successfully" });
 
-		const profileUrl = `http://localhost:5173/profile/${user.username}`;
+		const profileUrl = `https://careerlink-app-frontend.onrender.com/profile/${user.username}`;
 
 		try {
 			await sendWelcomeEmail(user.email, user.name, profileUrl);
@@ -81,8 +81,8 @@ export const login = async (req, res) => {
 		await res.cookie("jwt-linkedin", token, {
 			httpOnly: true,
 			maxAge: 3 * 24 * 60 * 60 * 1000,
-			sameSite: "strict",
-			secure: process.env.NODE_ENV === "production",
+			sameSite: "none",
+            secure: true,
 		});
 
 		res.json({ message: "Logged in successfully" });
