@@ -20,14 +20,15 @@ const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 const rootDir = path.resolve(__dirname, "..");
 
-if (process.env.NODE_ENV !== "production") {
-	app.use(
-		cors({
-			origin: "http://localhost:5173",
-			credentials: true,
-		})
-	);
-}
+app.use(
+	cors({
+		origin: [
+			"http://localhost:5173",
+			"https://careerlink-app-frontend.onrender.com",
+		],
+		credentials: true,
+	})
+);
 
 app.use(express.json({ limit: "5mb" })); // parse JSON request bodies
 app.use(cookieParser());
